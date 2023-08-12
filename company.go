@@ -16,7 +16,7 @@ type WorkingPosition struct {
 type Staff struct {
 	StaffID     int    `json:"staff_id"`
 	FIO         string `json:"fio"`
-	Position    int    `json:"position"`
+	PositionID  int    `json:"position_id"`
 	DateOfBirth string `json:"date_of_birth"`
 	Salary      int    `json:"salary"`
 	Phone       string `json:"phone"`
@@ -25,6 +25,7 @@ type Staff struct {
 
 type Order struct {
 	OrderID       int     `json:"order_id"`
+	ClientID      int     `json:"client_id"`
 	Name          string  `json:"name"`
 	Cost          float64 `json:"cost"`
 	PaymentMethod string  `json:"payment_method"`
@@ -33,11 +34,11 @@ type Order struct {
 	Description   string  `json:"description"`
 }
 
-type Document struct {
-	DocumentID int    `json:"document_id"`
-	ClientID   int    `json:"client_id"`
-	OrderID    int    `json:"order_id"`
-	StaffID    int    `json:"staff_id"`
-	Date       string `json:"date"`
-	Company    string `json:"company"`
-}
+//type Document struct {
+//	DocumentID int    `json:"document_id"`
+//	ClientID   int    `json:"client_id"`
+//	OrderID    int    `json:"order_id"`
+//	StaffID    int    `json:"staff_id"`
+//	Date       string `json:"date"`
+//	Company    string `json:"company"`
+//}
