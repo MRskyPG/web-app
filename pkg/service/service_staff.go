@@ -70,3 +70,42 @@ func (mp *MapService) GetAllPositions() map[int]web.WorkingPosition {
 	defer mp.MemoryPositions.Unlock()
 	return mp.MemoryPositions.data
 }
+
+func (mp *MapService) InsertStaff(s *web.Staff) {
+	mp.MemoryStaff.Lock()
+
+	//Вставляем содержимое в мапу по ключу mp.counter = 1, 2...
+	s.StaffID = mp.MemoryStaff.counter
+	mp.MemoryStaff.data[s.StaffID] = *s
+	mp.MemoryStaff.counter++
+	mp.MemoryStaff.Unlock()
+}
+
+func (mp *MapService) GetAllStaff() map[int]web.Staff {
+	mp.MemoryStaff.Lock()
+	defer mp.MemoryStaff.Unlock()
+	return mp.MemoryStaff.data
+}
+
+func (mp *MapService) GetStaff(sID int) (web.Staff, error) {
+	mp.MemoryStaff.Lock()
+	defer mp.MemoryStaff.Unlock()
+
+	staff, ok := mp.MemoryStaff.data[sID]
+	if !ok {
+		return staff, errors.New("Position not found.")
+	}
+	return staff, nil
+}
+
+func (mp *MapService) UpdateStaff(sID int, s web.Staff) {
+	mp.MemoryStaff.Lock()
+	defer mp.MemoryStaff.Unlock()
+	mp.MemoryStaff.data[sID] = s
+}
+
+func (mp *MapService) DeleteStaff(sID int) {
+	mp.MemoryStaff.Lock()
+	defer mp.MemoryStaff.Unlock()
+	delete(mp.MemoryStaff.data, sID)
+}

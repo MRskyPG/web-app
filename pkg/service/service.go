@@ -10,8 +10,17 @@ type WebPositions interface {
 	GetAllPositions() map[int]web.WorkingPosition
 }
 
+type WebStaff interface {
+	InsertStaff(s *web.Staff)
+	GetAllStaff() map[int]web.Staff
+	UpdateStaff(sID int, s web.Staff)
+	DeleteStaff(sID int)
+	GetStaff(sID int) (web.Staff, error)
+}
+
 type Service interface {
 	WebPositions
+	WebStaff
 }
 
 type MapService struct {

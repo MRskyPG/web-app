@@ -99,21 +99,100 @@ func (h *Handler) deletePosition(c *gin.Context) {
 }
 
 func (h *Handler) createStaff(c *gin.Context) {
+	position_id, err := strconv.Atoi(c.Param("position_id"))
+	if err != nil {
+		fmt.Printf("An error occured: failed to convert position_id to int [%s]", err.Error())
+		c.JSON(http.StatusBadRequest, ErrorResponse{
+			Message: err.Error(),
+		})
+		return
+	}
 
+	var staff web.Staff
+	if err := c.BindJSON(&staff); err != nil {
+		fmt.Printf("An error occured: failed to bind JSON  [%s]", err.Error())
+		c.JSON(http.StatusBadRequest, ErrorResponse{
+			Message: err.Error(),
+		})
+		return
+	}
+
+	h.service.InsertStaff(&staff)
+	staff.PositionID = position_id
+
+	c.JSON(http.StatusOK, map[string]interface{}{
+		"staff_id":    staff.StaffID,
+		"position_id": staff.PositionID,
+	})
 }
 
 func (h *Handler) getAllStaff(c *gin.Context) {
-
+	staff := h.service.GetAllStaff()
+	c.JSON(http.StatusOK, staff)
 }
 
 func (h *Handler) getStaffById(c *gin.Context) {
+	staff_id, err := strconv.Atoi(c.Param("staff_id"))
 
+	if err != nil {
+		fmt.Printf("An error occured: failed to convert staff_id to int [%s]", err.Error())
+		c.JSON(http.StatusBadRequest, ErrorResponse{
+			Message: err.Error(),
+		})
+		return
+	}
+
+	var staff web.Staff
+	staff, err = h.service.GetStaff(staff_id)
+
+	if err != nil {
+		fmt.Printf("An error occured: [%s]", err.Error())
+		c.JSON(http.StatusBadRequest, ErrorResponse{
+			Message: err.Error(),
+		})
+		return
+	}
+
+	c.JSON(http.StatusOK, staff)
 }
 
 func (h *Handler) updateStaff(c *gin.Context) {
+	staff_id, err := strconv.Atoi(c.Param("staff_id"))
+	if err != nil {
+		fmt.Printf("An error occured: failed to convert staff_id to int [%s]", err.Error())
+		c.JSON(http.StatusBadRequest, ErrorResponse{
+			Message: err.Error(),
+		})
+		return
+	}
 
+	var staff web.Staff
+	if err := c.BindJSON(&staff); err != nil {
+		fmt.Printf("An error occured: failed to bind JSON [%s]", err.Error())
+		c.JSON(http.StatusBadRequest, ErrorResponse{
+			Message: err.Error(),
+		})
+		return
+	}
+
+	staff.StaffID = staff_id
+	h.service.UpdateStaff(staff_id, staff)
+
+	c.JSON(http.StatusOK, web.Staff{
+		StaffID: staff_id,
+	})
 }
 
 func (h *Handler) deleteStaff(c *gin.Context) {
+	staff_id, err := strconv.Atoi(c.Param("staff_id"))
+	if err != nil {
+		fmt.Printf("An error occured: failed to convert staff_id to int [%s]", err.Error())
+		c.JSON(http.StatusBadRequest, ErrorResponse{
+			Message: err.Error(),
+		})
+		return
+	}
 
+	h.service.DeleteStaff(staff_id)
+	c.String(http.StatusOK, "Employee deleted")
 }
