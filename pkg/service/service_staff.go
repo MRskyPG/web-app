@@ -74,7 +74,6 @@ func (mp *MapService) GetAllPositions() map[int]web.WorkingPosition {
 func (mp *MapService) InsertStaff(s *web.Staff) {
 	mp.MemoryStaff.Lock()
 
-	//Вставляем содержимое в мапу по ключу mp.counter = 1, 2...
 	s.StaffID = mp.MemoryStaff.counter
 	mp.MemoryStaff.data[s.StaffID] = *s
 	mp.MemoryStaff.counter++

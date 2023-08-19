@@ -18,19 +18,41 @@ type WebStaff interface {
 	GetStaff(sID int) (web.Staff, error)
 }
 
+type WebClient interface {
+	InsertClient(c *web.Client)
+	GetAllClients() map[int]web.Client
+	UpdateClient(cID int, c web.Client)
+	DeleteClient(cID int)
+	GetClient(cID int) (web.Client, error)
+}
+
+type WebOrder interface {
+	InsertOrder(o *web.Order)
+	GetAllOrders() map[int]web.Order
+	UpdateOrder(oID int, c web.Order)
+	DeleteOrder(oID int)
+	GetOrder(oID int) (web.Order, error)
+}
+
 type Service interface {
 	WebPositions
 	WebStaff
+	WebClient
+	WebOrder
 }
 
 type MapService struct {
 	*MemoryPositions
 	*MemoryStaff
+	*MemoryClients
+	*MemoryOrders
 }
 
 func NewMapService() *MapService {
 	return &MapService{
 		MemoryPositions: NewMemoryPositions(),
 		MemoryStaff:     NewMemoryStaff(),
+		MemoryClients:   NewMemoryClients(),
+		MemoryOrders:    NewMemoryOrders(),
 	}
 }
