@@ -25,6 +25,14 @@ func (mp *MapService) InsertOrder(o *web.Order) {
 	o.OrderID = mp.MemoryOrders.counter
 	mp.MemoryOrders.data[o.OrderID] = *o
 	mp.MemoryOrders.counter++
+
+	//Производим вставку order_id соответствующему клиенту
+	mp.MemoryClients.Lock()
+	if client, ok := mp.MemoryClients.data[o.ClientID]; ok {
+		client.OrderID = o.OrderID
+		mp.MemoryClients.data[o.ClientID] = client
+	}
+	mp.MemoryClients.Unlock()
 	mp.MemoryOrders.Unlock()
 }
 
@@ -43,6 +51,14 @@ func (mp *MapService) UpdateOrder(oID int, o web.Order) {
 	mp.MemoryOrders.Lock()
 	defer mp.MemoryOrders.Unlock()
 	mp.MemoryOrders.data[oID] = o
+
+	//Производим вставку order_id соответствующему клиенту
+	mp.MemoryClients.Lock()
+	if client, ok := mp.MemoryClients.data[o.ClientID]; ok {
+		client.OrderID = o.OrderID
+		mp.MemoryClients.data[o.ClientID] = client
+	}
+	mp.MemoryClients.Unlock()
 }
 
 func (mp *MapService) DeleteOrder(oID int) {

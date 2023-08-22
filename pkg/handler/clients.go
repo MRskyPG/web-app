@@ -78,8 +78,8 @@ func (h *Handler) updateClient(c *gin.Context) {
 	client.ID = id
 	h.service.UpdateClient(id, client)
 
-	c.JSON(http.StatusOK, web.Client{
-		ID: id,
+	c.JSON(http.StatusOK, map[string]interface{}{
+		"id": id,
 	})
 }
 

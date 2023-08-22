@@ -78,8 +78,8 @@ func (h *Handler) updateOrder(c *gin.Context) {
 	order.OrderID = order_id
 	h.service.UpdateOrder(order_id, order)
 
-	c.JSON(http.StatusOK, web.Order{
-		OrderID: order_id,
+	c.JSON(http.StatusOK, map[string]interface{}{
+		"order_id": order_id,
 	})
 }
 
