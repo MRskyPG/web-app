@@ -1,7 +1,7 @@
 package handler
 
 import (
-	"github.com/MRskyPG/web-app/pkg/service"
+	"github.com/MRskyPG/web-app/internal/service"
 	"github.com/gin-gonic/gin"
 )
 
