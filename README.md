@@ -60,6 +60,8 @@ type Order struct {
 
 
 ## API:
+Host: **localhost:port/**  
+Standart port is 80 (use **localhost/** or **127.0.0.1/** for methods described below)  
 ### WorkingPosition:
 ### POST api/working_positions
 Creates new name of working position for staff
