@@ -2,9 +2,9 @@ package main
 
 import (
 	"context"
-	"github.com/MRskyPG/web-app"
-	"github.com/MRskyPG/web-app/pkg/handler"
-	"github.com/MRskyPG/web-app/pkg/service"
+	"github.com/MRskyPG/web-app/internal/handler"
+	"github.com/MRskyPG/web-app/internal/service"
+	"github.com/MRskyPG/web-app/pkg/srv/httpserver"
 	"github.com/sirupsen/logrus"
 	"log"
 	"os"
@@ -15,7 +15,7 @@ import (
 func main() {
 	mapService := service.NewMapService()
 	handlers := handler.New(mapService)
-	var srv web.Server
+	var srv httpserver.Server
 
 	//Using graceful shutdown
 	go func() {
