@@ -32,14 +32,15 @@ func (h *Handler) InitRoutes() *gin.Engine {
 			staff := wPositions.Group(":position_id/staff")
 			{
 				staff.POST("", h.createStaff)
-				staff.GET("/:staff_id", h.getStaffById)
-				staff.PUT("/:staff_id", h.updateStaff)
-				staff.DELETE("/:staff_id", h.deleteStaff)
+
 			}
 		}
 		staff := api.Group("/staff")
 		{
 			staff.GET("", h.getAllStaff)
+			staff.GET("/:staff_id", h.getStaffById)
+			staff.PUT("/:staff_id", h.updateStaff)
+			staff.DELETE("/:staff_id", h.deleteStaff)
 		}
 
 		clients := api.Group("/clients")
