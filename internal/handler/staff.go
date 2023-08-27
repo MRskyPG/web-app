@@ -117,8 +117,8 @@ func (h *Handler) createStaff(c *gin.Context) {
 		return
 	}
 
-	h.service.InsertStaff(&staff)
 	staff.PositionID = position_id
+	h.service.InsertStaff(&staff)
 
 	c.JSON(http.StatusOK, map[string]interface{}{
 		"staff_id":    staff.StaffID,
