@@ -178,8 +178,8 @@ func (h *Handler) updateStaff(c *gin.Context) {
 	staff.StaffID = staff_id
 	h.service.UpdateStaff(staff_id, staff)
 
-	c.JSON(http.StatusOK, web.Staff{
-		StaffID: staff_id,
+	c.JSON(http.StatusOK, map[string]interface{}{
+		"staff_id": staff_id,
 	})
 }
 
