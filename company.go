@@ -33,12 +33,3 @@ type Order struct {
 	FinishDate    string  `json:"finish_date"`
 	Description   string  `json:"description"`
 }
-
-//type Document struct {
-//	DocumentID int    `json:"document_id"`
-//	ClientID   int    `json:"client_id"`
-//	OrderID    int    `json:"order_id"`
-//	StaffID    int    `json:"staff_id"`
-//	Date       string `json:"date"`
-//	Company    string `json:"company"`
-//}
